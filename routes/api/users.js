@@ -17,6 +17,8 @@ router.get("/test", (req, res) => {
 // Register Route
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/register", (req, res) => {
+    console.log("hello world");
+    
     const { errors, isValid } = validateRegisterInput(req.body);
 
     if (!isValid){

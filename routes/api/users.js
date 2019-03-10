@@ -6,6 +6,7 @@ const keys = require("../../config/keys");
 const jwt = require('jsonwebtoken');
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
+const passport = require('passport');
 
 router.get("/test", (req, res) => {
     res.json({
@@ -13,6 +14,8 @@ router.get("/test", (req, res) => {
     });
 });
 
+// Register Route
+////////////////////////////////////////////////////////////////////////////////
 router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -60,6 +63,8 @@ router.post("/register", (req, res) => {
     });
 });
 
+// Login Route
+////////////////////////////////////////////////////////////////////////////////
 router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -103,5 +108,18 @@ router.post("/login", (req, res) => {
                 });
         });
 });
+
+// Current User Route
+////////////////////////////////////////////////////////////////////////////////
+router.get('/current', 
+    passport.authenticate('jwt', {session: false}), 
+    (req, res) => {
+        res.json({
+            id: req.user.id,
+            handle: req.user.handle,
+            email: req.user.email
+        });
+    }
+);
 
 module.exports = router;

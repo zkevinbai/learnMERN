@@ -4,9 +4,9 @@ const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const keys = require("../../config/keys");
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
-const passport = require('passport');
 
 router.get("/test", (req, res) => {
     res.json({

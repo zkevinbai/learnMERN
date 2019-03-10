@@ -11,6 +11,9 @@ const User = require("./models/User");
 
 const bodyParser = require('body-parser'); // tells app what kinds of requests to respond to
 
+const passport = require('passport');
+require('./config/passport')(passport);
+
 mongoose
     .connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to MongoDB successfully"))
@@ -22,17 +25,18 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-    const user = new User({
-        handle: "kev",
-        email: "kev@kev.com",
-        password: "password"
-    });
-    res.send("Hello World");
-});
+// app.get("/", (req, res) => {
+//     const user = new User({
+//         handle: "kev",
+//         email: "kev@kev.com",
+//         password: "password"
+//     });
+//     res.send("Hello World");
+// });
 
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
+app.use(passport.initialize());
 
 const port = process.env.PORT || 5000;
 
